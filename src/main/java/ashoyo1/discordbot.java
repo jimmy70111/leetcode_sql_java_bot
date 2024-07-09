@@ -18,18 +18,32 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+
+
+
+//JDA
+// onmessageRecived is auto call by JDA
+// JDA internally manages a WebSocket connection to discord server
+// 
+
 public class discordbot extends ListenerAdapter {
 
     public static void main(String[] args) throws LoginException, IOException {
+        // properties objevt to load 
+
         Properties properties = new Properties();
         try (InputStream input = new FileInputStream("config.properties")) {
+            //LOAD AND retrieve
             properties.load(input);
             String token = properties.getProperty("bot.token");
 
+
+
             JDABuilder.createDefault(token)
+            // enable bot to see mesgge 
             .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.MESSAGE_CONTENT) 
-                    .addEventListeners(new discordbot())
-                    .build();
+                    .addEventListeners(new discordbot()) // register bot class to event listener
+                    .build(); // build jda instances 
         } catch (IOException | LoginException e) {
             e.printStackTrace();
         }
@@ -37,15 +51,18 @@ public class discordbot extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        Message message = event.getMessage();
 
+        // users from bot mesg and get raw of it 
+        Message message = event.getMessage();
         String content = message.getContentRaw();
+
+        // queue make it wait in line of thread 
 
         if (content.equalsIgnoreCase("!hi")) {
             event.getChannel().sendMessage("Hello! How are you doing?").queue();
         }
 
-        if (content.equals("!getUsers")) {
+        if (content.equalsIgnoreCase("!getUsers")) {
             try {
                 Connection connection = sqlconnect.getConnection();
                 if (connection != null) {

@@ -15,5 +15,6 @@
             "password": "jimmyjiang2264160985"
         }
     ],
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.debug.settings.onBuildFailureProceed": true
 }

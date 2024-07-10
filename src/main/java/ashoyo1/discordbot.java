@@ -64,7 +64,7 @@ public class discordbot extends ListenerAdapter {
         // get user profile method
 
 
-        if (content.equals("!Get")) {
+        if (content.startsWith("!Get")) {
             String user = content.substring(5).trim(); 
         
             try {
@@ -137,6 +137,6 @@ public class discordbot extends ListenerAdapter {
 
 
 
-        
+
     }
 }

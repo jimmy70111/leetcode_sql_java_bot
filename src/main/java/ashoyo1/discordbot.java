@@ -9,10 +9,13 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
 
+import com.mysql.cj.xdevapi.PreparableStatement;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -50,7 +53,7 @@ public class discordbot extends ListenerAdapter {
     }
 
     @Override
-    public void onMessageReceived(MessageReceivedEvent event) {
+    public void onMessageReceived(@SuppressWarnings("null") MessageReceivedEvent event) {
 
         // users from bot mesg and get raw of it 
         Message message = event.getMessage();
@@ -58,10 +61,52 @@ public class discordbot extends ListenerAdapter {
 
         // queue make it wait in line of thread 
 
-        if (content.equalsIgnoreCase("!hi")) {
-            event.getChannel().sendMessage("Hello! How are you doing?").queue();
-        }
+        // get user profile method
 
+
+        if (content.equals("!Get")) {
+            String user = content.substring(5).trim(); 
+        
+            try {
+                Connection connection = sqlconnect.getConnection();
+                if (connection != null) {
+                    String query = "SELECT * FROM LeetCodeUsers WHERE username = ?";
+                    PreparedStatement preparedStatement = connection.prepareStatement(query);
+                    preparedStatement.setString(1, user); 
+        
+                    ResultSet resultSet = preparedStatement.executeQuery();
+        
+                    StringBuilder response = new StringBuilder("LeetCode User:\n");
+                    if (resultSet.next()) {
+                        response.append("User ID: ").append(resultSet.getInt("user_id")).append("\n");
+                        response.append("Username: ").append(resultSet.getString("username")).append("\n");
+                        response.append("Email: ").append(resultSet.getString("email")).append("\n");
+                        response.append("Join Date: ").append(resultSet.getDate("join_date")).append("\n");
+                        response.append("Last Login: ").append(resultSet.getTimestamp("last_login")).append("\n");
+                        response.append("Problems Solved: ").append(resultSet.getInt("problems")).append("\n");
+                    } else {
+                        response = new StringBuilder("No user found with username: ").append(user);
+                    }
+        
+                    event.getChannel().sendMessage(response.toString()).queue();
+        
+                    resultSet.close();
+                    preparedStatement.close();
+                    connection.close();
+                } else {
+                    event.getChannel().sendMessage("Failed to establish database connection.").queue();
+                }
+            } catch (SQLException | IOException e) {
+                event.getChannel().sendMessage("Database error: " + e.getMessage()).queue();
+            }
+        }
+        
+
+   
+
+
+// getr all users 
+     
         if (content.equalsIgnoreCase("!getUsers")) {
             try {
                 Connection connection = sqlconnect.getConnection();
@@ -89,5 +134,9 @@ public class discordbot extends ListenerAdapter {
                 event.getChannel().sendMessage("Database error: " + e.getMessage()).queue();
             }
         }
+
+
+
+        
     }
 }

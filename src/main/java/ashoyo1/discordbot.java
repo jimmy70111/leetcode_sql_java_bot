@@ -64,12 +64,14 @@ public class discordbot extends ListenerAdapter {
         // get user profile method
 
 
-        if (content.startsWith("!Get")) {
+        if (content.toLowerCase().startsWith("!get")) {
             String user = content.substring(5).trim(); 
         
             try {
                 Connection connection = sqlconnect.getConnection();
                 if (connection != null) {
+
+                    // use preparedStatement to set to index
                     String query = "SELECT * FROM LeetCodeUsers WHERE username = ?";
                     PreparedStatement preparedStatement = connection.prepareStatement(query);
                     preparedStatement.setString(1, user); 

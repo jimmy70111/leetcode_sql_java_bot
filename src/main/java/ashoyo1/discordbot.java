@@ -147,7 +147,7 @@ public class discordbot extends ListenerAdapter {
                 Connection connection = sqlconnect.getConnection();
                 if (connection != null) {
                     Statement statement = connection.createStatement();
-                    ResultSet resultSet = statement.executeQuery("SELECT * FROM LeetCodeUsers ORDER BY problems DESC");
+                    ResultSet resultSet = statement.executeQuery("SELECT * FROM LeetCodeUsers ORDER BY problems DESC LIMIT 10 ");
 
                     StringBuilder response = new StringBuilder("Leaderboard:\n");
                     while (resultSet.next()) {

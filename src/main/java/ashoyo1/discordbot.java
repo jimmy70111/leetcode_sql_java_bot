@@ -83,8 +83,6 @@ public class discordbot extends ListenerAdapter {
                         response.append("User ID: ").append(resultSet.getInt("user_id")).append("\n");
                         response.append("Username: ").append(resultSet.getString("username")).append("\n");
                         response.append("Email: ").append(resultSet.getString("email")).append("\n");
-                        response.append("Join Date: ").append(resultSet.getDate("join_date")).append("\n");
-                        response.append("Last Login: ").append(resultSet.getTimestamp("last_login")).append("\n");
                         response.append("Problems Solved: ").append(resultSet.getInt("problems")).append("\n");
                     } else {
                         response = new StringBuilder("No user found with username: ").append(user);
@@ -121,8 +119,6 @@ public class discordbot extends ListenerAdapter {
                         response.append("User ID: ").append(resultSet.getInt("user_id")).append("\n");
                         response.append("Username: ").append(resultSet.getString("username")).append("\n");
                         response.append("Email: ").append(resultSet.getString("email")).append("\n");
-                        response.append("Join Date: ").append(resultSet.getDate("join_date")).append("\n");
-                        response.append("Last Login: ").append(resultSet.getTimestamp("last_login")).append("\n");
                         response.append("Problems: ").append(resultSet.getInt("problems")).append("\n\n");
                     }
 

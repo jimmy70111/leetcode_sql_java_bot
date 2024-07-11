@@ -63,6 +63,16 @@ public class discordbot extends ListenerAdapter {
 
         // get user profile method
 
+        if (content.equalsIgnoreCase("!commands")) {
+            StringBuilder response = new StringBuilder("Available Commands:\n");
+            response.append("!Users - View all users and their details.\n");
+            response.append("!get - View the specific user details, call this command by !get username .\n");
+            response.append("!leaderboard - View the leaderboard sorted by the highest number of problems solved.\n");
+            // Add more command descriptions here as you implement them
+        
+            event.getChannel().sendMessage(response.toString()).queue();
+        }
+
 
         if (content.toLowerCase().startsWith("!get")) {
             String user = content.substring(5).trim(); 
@@ -102,12 +112,9 @@ public class discordbot extends ListenerAdapter {
         }
         
 
-   
-
-
 // getr all users 
      
-        if (content.equalsIgnoreCase("!getUsers")) {
+        if (content.equalsIgnoreCase("!Users")) {
             try {
                 Connection connection = sqlconnect.getConnection();
                 if (connection != null) {
@@ -133,6 +140,31 @@ public class discordbot extends ListenerAdapter {
             }
         }
 
+
+
+        if (content.equalsIgnoreCase("!Leaderboard")) {
+            try {
+                Connection connection = sqlconnect.getConnection();
+                if (connection != null) {
+                    Statement statement = connection.createStatement();
+                    ResultSet resultSet = statement.executeQuery("SELECT * FROM LeetCodeUsers ORDER BY problems DESC");
+
+                    StringBuilder response = new StringBuilder("Leaderboard:\n");
+                    while (resultSet.next()) {
+                        response.append("Username: ").append(resultSet.getString("username")).append(" | ");
+                        response.append("Problems: ").append(resultSet.getInt("problems")).append("\n");
+                    }
+
+                    event.getChannel().sendMessage(response.toString()).queue();
+
+                    resultSet.close();
+                    statement.close();
+                    connection.close();
+                }
+            } catch (SQLException | IOException e) {
+                event.getChannel().sendMessage("Database error: " + e.getMessage()).queue();
+            }
+        }
 
 
 

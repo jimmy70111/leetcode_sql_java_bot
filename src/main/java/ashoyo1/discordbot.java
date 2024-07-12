@@ -94,6 +94,9 @@ public class discordbot extends ListenerAdapter {
                         response.append("Username: ").append(resultSet.getString("username")).append("\n");
                         response.append("Email: ").append(resultSet.getString("email")).append("\n");
                         response.append("Problems Solved: ").append(resultSet.getInt("problems")).append("\n");
+                        response.append("Easy: ").append(resultSet.getInt("Easy")).append("\n");
+                        response.append("Medium: ").append(resultSet.getInt("Medium")).append("\n");
+                        response.append("Hard: ").append(resultSet.getInt("Hard")).append("\n\n");
                     } else {
                         response = new StringBuilder("No user found with username: ").append(user);
                     }
@@ -127,9 +130,7 @@ public class discordbot extends ListenerAdapter {
                         response.append("Username: ").append(resultSet.getString("username")).append("\n");
                         response.append("Email: ").append(resultSet.getString("email")).append("\n");
                         response.append("Problems: ").append(resultSet.getInt("problems")).append("\n");
-                        response.append("Easy: ").append(resultSet.getInt("Easy")).append("\n");
-                        response.append("Medium: ").append(resultSet.getInt("Medium")).append("\n");
-                        response.append("Hard: ").append(resultSet.getInt("Hard")).append("\n\n");
+                    
                     }
 
                     event.getChannel().sendMessage(response.toString()).queue();

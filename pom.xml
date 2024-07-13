@@ -37,6 +37,18 @@
             <artifactId>JDA</artifactId>
             <version>5.0.0-alpha.15</version>
         </dependency>
+            <!-- Add org.json dependency -->
+        <dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20210307</version>
+</dependency>
+
+
+
+
+
+
     </dependencies>
 
     <build>

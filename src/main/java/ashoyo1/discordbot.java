@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
 
-import com.mysql.cj.xdevapi.PreparableStatement;
 
 import java.io.FileInputStream;
 import java.io.IOException;

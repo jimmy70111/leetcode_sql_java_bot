@@ -39,6 +39,7 @@ public class LeetcodeAPIfetch {
                 // Print specific fields
                // System.out.println("Status: " + jsonObject.getString("status"));
             //    System.out.println("Message: " + jsonObject.getString("message"));
+            System.out.println("UserName: " + username);
                 System.out.println("Total Solved: " + jsonObject.getInt("totalSolved"));
            //     System.out.println("Total Questions: " + jsonObject.getInt("totalQuestions"));
                 System.out.println("Easy Solved: " + jsonObject.getInt("easySolved"));

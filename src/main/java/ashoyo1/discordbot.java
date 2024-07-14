@@ -9,10 +9,15 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
 
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,6 +34,9 @@ import java.util.Properties;
 // 
 
 public class discordbot extends ListenerAdapter {
+
+    private static final String API_URL = "https://leetcode-stats-api.herokuapp.com/";
+
 
     public static void main(String[] args) throws LoginException, IOException {
         // properties objevt to load 
@@ -74,43 +82,124 @@ public class discordbot extends ListenerAdapter {
 
 
         if (content.toLowerCase().startsWith("!get")) {
-            String user = content.substring(5).trim(); 
+            // String user = content.substring(5).trim(); 
         
-            try {
-                Connection connection = sqlconnect.getConnection();
-                if (connection != null) {
+            // try {
+            //     Connection connection = sqlconnect.getConnection();
+            //     if (connection != null) {
 
-                    // use preparedStatement to set to index
-                    String query = "SELECT * FROM LeetCodeUsers WHERE username = ?";
-                    PreparedStatement preparedStatement = connection.prepareStatement(query);
-                    preparedStatement.setString(1, user); 
+            //         // use preparedStatement to set to index
+            //         String query = "SELECT * FROM LeetCodeUsers WHERE username = ?";
+            //         PreparedStatement preparedStatement = connection.prepareStatement(query);
+            //         preparedStatement.setString(1, user); 
         
-                    ResultSet resultSet = preparedStatement.executeQuery();
+            //         ResultSet resultSet = preparedStatement.executeQuery();
         
-                    StringBuilder response = new StringBuilder("LeetCode User:\n");
-                    if (resultSet.next()) {
-                        response.append("User ID: ").append(resultSet.getInt("user_id")).append("\n");
-                        response.append("Username: ").append(resultSet.getString("username")).append("\n");
-                        response.append("Email: ").append(resultSet.getString("email")).append("\n");
-                        response.append("Problems Solved: ").append(resultSet.getInt("problems")).append("\n");
-                        response.append("Easy: ").append(resultSet.getInt("Easy")).append("\n");
-                        response.append("Medium: ").append(resultSet.getInt("Medium")).append("\n");
-                        response.append("Hard: ").append(resultSet.getInt("Hard")).append("\n\n");
-                    } else {
-                        response = new StringBuilder("No user found with username: ").append(user);
-                    }
+            //         StringBuilder response = new StringBuilder("LeetCode User:\n");
+            //         if (resultSet.next()) {
+            //             response.append("User ID: ").append(resultSet.getInt("user_id")).append("\n");
+            //             response.append("Username: ").append(resultSet.getString("username")).append("\n");
+            //             response.append("Email: ").append(resultSet.getString("email")).append("\n");
+            //             response.append("Problems Solved: ").append(resultSet.getInt("problems")).append("\n");
+            //             response.append("Easy: ").append(resultSet.getInt("Easy")).append("\n");
+            //             response.append("Medium: ").append(resultSet.getInt("Medium")).append("\n");
+            //             response.append("Hard: ").append(resultSet.getInt("Hard")).append("\n\n");
+            //         } else {
+            //             response = new StringBuilder("No user found with username: ").append(user);
+            //         }
         
-                    event.getChannel().sendMessage(response.toString()).queue();
+            //         event.getChannel().sendMessage(response.toString()).queue();
         
-                    resultSet.close();
-                    preparedStatement.close();
-                    connection.close();
-                } else {
-                    event.getChannel().sendMessage("Failed to establish database connection.").queue();
+            //         resultSet.close();
+            //         preparedStatement.close();
+            //         connection.close();
+            //     } else {
+            //         event.getChannel().sendMessage("Failed to establish database connection.").queue();
+            //     }
+            // } catch (SQLException | IOException e) {
+            //     event.getChannel().sendMessage("Database error: " + e.getMessage()).queue();
+            // }
+
+
+          
+            String user = content.substring(5).trim(); 
+
+        try {
+            String apiUrl = API_URL + user;
+            URL url = new URL(apiUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
                 }
-            } catch (SQLException | IOException e) {
-                event.getChannel().sendMessage("Database error: " + e.getMessage()).queue();
+                reader.close();
+
+                // Print the raw response
+               // System.out.println("Response: " + response.toString());
+
+                // Parse JSON response
+                JSONObject jsonObject = new JSONObject(response.toString());
+                StringBuilder responseMessage = new StringBuilder("LeetCode User:\n");
+
+                int totalSolved = jsonObject.getInt("totalSolved");
+                int easySolved = jsonObject.getInt("easySolved");
+                int mediumSolved = jsonObject.getInt("mediumSolved");
+                int hardSolved = jsonObject.getInt("hardSolved");
+                double acceptanceRate = jsonObject.getDouble("acceptanceRate");
+
+                //responseMessage.append("Username: ").append(user).append("\n");
+                responseMessage.append("Total Solved: ").append(totalSolved).append("\n");
+                responseMessage.append("Easy Solved: ").append(easySolved).append("\n");
+                responseMessage.append("Medium Solved: ").append(mediumSolved).append("\n");
+                responseMessage.append("Hard Solved: ").append(hardSolved).append("\n");
+                responseMessage.append("Acceptance Rate: ").append(acceptanceRate).append("%\n");
+
+                event.getChannel().sendMessage(responseMessage.toString()).queue();
+
+
+
+                try (Connection dbConnection = sqlconnect.getConnection();
+                PreparedStatement statement = dbConnection.prepareStatement(
+                        "INSERT INTO LeetCodeUsers (username, problems, Easy, Medium, Hard, acceptanceRate) " +
+                                "VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE " +
+                                "problems = VALUES(problems), Easy = VALUES(Easy), Medium = VALUES(Medium), " +
+                                "Hard = VALUES(Hard), acceptanceRate = VALUES(acceptanceRate)")) {
+
+               statement.setString(1, user);
+               statement.setInt(2, totalSolved);
+               statement.setInt(3, easySolved);
+               statement.setInt(4, mediumSolved);
+               statement.setInt(5, hardSolved);
+               statement.setDouble(6, acceptanceRate);
+
+               statement.executeUpdate();
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }
+
+
+
+
+
+
+
+
+                
+            } else {
+                System.out.println("HTTP GET request failed: " + responseCode);
             }
+            connection.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+            
         }
         
 
@@ -125,9 +214,9 @@ public class discordbot extends ListenerAdapter {
 
                     StringBuilder response = new StringBuilder("LeetCode Users:\n");
                     while (resultSet.next()) {
-                        response.append("User ID: ").append(resultSet.getInt("user_id")).append("\n");
+                       // response.append("User ID: ").append(resultSet.getInt("user_id")).append("\n");
                         response.append("Username: ").append(resultSet.getString("username")).append("\n");
-                        response.append("Email: ").append(resultSet.getString("email")).append("\n");
+                        //response.append("Email: ").append(resultSet.getString("email")).append("\n");
                         response.append("Problems: ").append(resultSet.getInt("problems")).append("\n");
                     
                     }

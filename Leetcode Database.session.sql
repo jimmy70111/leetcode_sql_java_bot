@@ -1,8 +1,5 @@
-
-
-
 USE leetcode_leaderboard;
 
--- Delete the acceptanceRate column from the LeetCodeUsers table
+-- Add a primary key constraint on username
 ALTER TABLE LeetCodeUsers
-DROP COLUMN email;
+ADD CONSTRAINT pk_username PRIMARY KEY (username);

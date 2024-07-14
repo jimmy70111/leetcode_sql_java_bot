@@ -183,13 +183,6 @@ public class discordbot extends ListenerAdapter {
                e.printStackTrace();
            }
 
-
-
-
-
-
-
-
                 
             } else {
                 System.out.println("HTTP GET request failed: " + responseCode);

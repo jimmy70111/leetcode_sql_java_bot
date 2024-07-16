@@ -4,5 +4,4 @@
 - Maven for dependency management
 - MySQL Database
 - Discord Bot Token
-- Leetcode API
-
+-Rest API

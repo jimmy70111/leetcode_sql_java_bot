@@ -194,6 +194,19 @@ public class discordbot extends ListenerAdapter {
 
             
         }
+
+
+
+
+
+// linked user
+
+        if (content.toLowerCase().startsWith("!Link")) {
+
+
+        }
+
+
         
 
 // getr all users 

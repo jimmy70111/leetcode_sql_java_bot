@@ -202,11 +202,12 @@ public class discordbot extends ListenerAdapter {
 // linked user
 
         if (content.toLowerCase().startsWith("!Link")) {
-
+            String linkuser = content.substring(5).trim(); 
+            String discorduserId = event.getAuthor().getId();
 
         }
 
-
+// Setting up dailies and users will get a problem to solve 
         
 
 // getr all users 

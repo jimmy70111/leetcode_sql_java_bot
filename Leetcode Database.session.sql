@@ -1,5 +1,7 @@
 USE leetcode_leaderboard;
 
--- Add a primary key constraint on username
-ALTER TABLE LeetCodeUsers
-ADD CONSTRAINT pk_username PRIMARY KEY (username);
+CREATE TABLE LeetCodeProblems (
+    title VARCHAR(255),
+    difficulty ENUM('Easy', 'Medium', 'Hard'),
+    url VARCHAR(255)
+);

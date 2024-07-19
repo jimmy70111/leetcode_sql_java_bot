@@ -5,6 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class leetcodeproblems {
 
     private static final int  max = 100; 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         List<String[]> problems = new ArrayList<>();
         int count = 0;
@@ -20,7 +21,10 @@ public class leetcodeproblems {
 
         while (count < max) {
 
-            Document doc = Jsoup.connect("https://leetcode.com/problemset/all/?page=" + page).get();
+            Document doc = Jsoup.connect("https://leetcode.com/problemset/all/?page=" + page)
+                    .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+                    .get();
+
             Elements rows = doc.select(".reactable-data tr");
 
             for (Element row : rows) {

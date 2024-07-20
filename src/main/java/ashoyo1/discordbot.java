@@ -73,6 +73,7 @@ public class discordbot extends ListenerAdapter {
         if (content.equalsIgnoreCase("!commands")) {
             StringBuilder response = new StringBuilder("Available Commands:\n");
             response.append("!Users - View all users and their details.\n");
+            response.append("!link -  link discord user with an leetcode user.\n");
             response.append("!get - View the specific user details, call this command by !get username .\n");
             response.append("!leaderboard - View the leaderboard sorted by the highest number of problems solved.\n");
             // Add more command descriptions here as you implement them
@@ -201,22 +202,21 @@ public class discordbot extends ListenerAdapter {
 
 // linked user
 
-        if (content.toLowerCase().startsWith("!Link")) {
+   
+
+        if (content.toLowerCase().startsWith("!link")) {
             String linkuser = content.substring(5).trim(); 
             String discorduserId = event.getAuthor().getId();
 
             try {
                 DatabaseManager.updateDiscordId(linkuser, discorduserId);
                 event.getChannel().sendMessage("Successfully linked your Discord ID with LeetCode user: " + linkuser).queue();
-
             } catch (SQLException | IOException e) {
-
                 e.printStackTrace();
-                event.getChannel().sendMessage("error").queue();
+                event.getChannel().sendMessage("Fail to linked").queue();
             }
-            
-
         }
+
 
 // Setting up dailies and users will get a problem to solve 
         

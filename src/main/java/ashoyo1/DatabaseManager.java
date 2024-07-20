@@ -8,6 +8,10 @@ import java.sql.SQLException;
 public class DatabaseManager {
 
 
+    private static final String getRandProblem = "SELECT url FROM leetcodeproblems ORDER BY RAND() LIMIT 1";
+    private static final String getDiscordUsers =  "SELECT discordUserId FROM LeetCodeUsers WHERE discordUserId IS NOT NULL";
+
+
     public static void updateDiscordId(String linkuser, String discorduserId) throws SQLException, IOException {
         Connection connection = sqlconnect.getConnection();
         if (connection != null) {

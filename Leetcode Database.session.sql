@@ -1,4 +1,4 @@
 USE leetcode_leaderboard;
 
 ALTER TABLE LeetCodeUsers
-ADD PRIMARY KEY (discordUserId);
+CHANGE COLUMN discordUserId discordUserId VARCHAR(50);

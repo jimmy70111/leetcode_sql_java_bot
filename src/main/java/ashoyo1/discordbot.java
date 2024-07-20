@@ -205,6 +205,14 @@ public class discordbot extends ListenerAdapter {
             String linkuser = content.substring(5).trim(); 
             String discorduserId = event.getAuthor().getId();
 
+            try {
+                DatabaseManager.updateDiscordId(linkuser, discorduserId);
+            } catch (SQLException | IOException e) {
+
+                e.printStackTrace();
+            }
+            
+
         }
 
 // Setting up dailies and users will get a problem to solve 

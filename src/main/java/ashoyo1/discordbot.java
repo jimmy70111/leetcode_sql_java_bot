@@ -207,9 +207,12 @@ public class discordbot extends ListenerAdapter {
 
             try {
                 DatabaseManager.updateDiscordId(linkuser, discorduserId);
+                event.getChannel().sendMessage("Successfully linked your Discord ID with LeetCode user: " + linkuser).queue();
+
             } catch (SQLException | IOException e) {
 
                 e.printStackTrace();
+                event.getChannel().sendMessage("error").queue();
             }
             
 

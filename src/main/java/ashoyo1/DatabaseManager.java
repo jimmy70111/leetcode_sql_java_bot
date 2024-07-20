@@ -16,6 +16,9 @@ public class DatabaseManager {
             try (PreparedStatement stmt = connection.prepareStatement(sql)) {
                 stmt.setString(1, discorduserId);
                 stmt.setString(2, linkuser);
+
+              
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }

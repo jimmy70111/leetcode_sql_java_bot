@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class leetcodeproblems {
 
-    private static final int  max = 100; 
+    //private static final int  max = 100; 
 
     public static void main(String[] args) throws IOException {
 

@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
-import javax.print.DocFlavor.STRING;
 import javax.security.auth.login.LoginException;
 
 import org.json.JSONObject;
@@ -203,7 +202,7 @@ public class discordbot extends ListenerAdapter {
 
 // linked user
 
-   
+
 
         if (content.toLowerCase().startsWith("!link")) {
             String linkuser = content.substring(5).trim(); 
@@ -211,7 +210,7 @@ public class discordbot extends ListenerAdapter {
 
             try {
                 DatabaseManager.updateDiscordId(linkuser, discorduserId);
-                event.getChannel().sendMessage("Successfully linked your Discord ID with LeetCode user: " + discorduserId).queue();
+                event.getChannel().sendMessage("Successfully linked your Discord ID with LeetCode user: " + linkuser).queue();
             } catch (SQLException | IOException e) {
                 e.printStackTrace();
                 event.getChannel().sendMessage("Fail to linked").queue();

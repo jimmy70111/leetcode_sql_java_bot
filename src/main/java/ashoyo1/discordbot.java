@@ -208,7 +208,7 @@ public class discordbot extends ListenerAdapter {
 
         if (content.toLowerCase().startsWith("!link")) {
             String linkuser = content.substring(5).trim(); 
-            String  discorduserId = event.getAuthor().getId();
+            String  discorduserId = event.getAuthor().getId();  
 
             try {
                 DatabaseManager.updateDiscordId(linkuser, discorduserId);
@@ -222,14 +222,33 @@ public class discordbot extends ListenerAdapter {
 
 // Setting up dailies and users will get a problem to solve 
 
-if (content.toLowerCase().startsWith("!daily")) {
-    String problem = DatabaseManager.getRandomProblem();
-    Set<String> discordUserIds = DatabaseManager.getDiscordIDs();
-    String daily = "Here is the problem of the day! " + problem;
+        if (content.toLowerCase().startsWith("!daily")) {
+            try {
+                // Retrieve the daily problem and Discord user IDs
+                String problem = DatabaseManager.getRandomProblem();
+                Set<String> discordUserIds = DatabaseManager.getDiscordIDs();
+                String daily = "Here is the problem of the day! " + problem;
 
- 
-}
-
+                // Send the daily problem to each user
+                for (String userId : discordUserIds) {
+                    User user = event.getJDA().getUserById(userId);
+                    if (user != null) {
+                        user.openPrivateChannel().queue(privateChannel -> 
+                            privateChannel.sendMessage(daily).queue()
+                        );
+                    }
+                }
+            } catch (SQLException e) {
+                // Handle SQL exception
+                e.printStackTrace();
+            } catch (IOException e) {
+                // Handle IO exception
+                e.printStackTrace();
+            } catch (Exception e) {
+                // Handle any other exceptions
+                e.printStackTrace();
+            }
+        }
 
 
 

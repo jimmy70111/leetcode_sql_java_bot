@@ -3,7 +3,10 @@ package ashoyo1;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DatabaseManager {
 
@@ -35,6 +38,48 @@ public class DatabaseManager {
             System.out.println("Failed to establish database connection.");
         }
     }
+
+
+
+    private String getRandomProblem() throws SQLException, IOException {
+        String url = null;
+        try (Connection connection = sqlconnect.getConnection();
+             PreparedStatement statement = connection.prepareStatement(getRandProblem);
+             ResultSet resultSet = statement.executeQuery()) {
+    
+            if (resultSet.next()) {
+                url = resultSet.getString("url");
+            }
+        }
+    
+        return url; 
+    }
+
+
+
+    private Set<String>  getDiscordIDs() throws SQLException, IOException {
+
+        Set<String> userIds = new HashSet<>();
+        try (Connection connection = sqlconnect.getConnection();
+             PreparedStatement statement = connection.prepareStatement(getDiscordUsers);
+             ResultSet resultSet = statement.executeQuery()) {
+    
+            while(resultSet.next()) {
+                userIds.add(resultSet.getString("discordUserId"));
+            }
+        }
+    
+        return userIds;
+    }
+
+
+
+
+    
+
+
+
+
     
 
 }

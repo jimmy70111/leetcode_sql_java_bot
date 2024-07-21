@@ -33,7 +33,7 @@ import java.util.Set;
 //JDA
 // onmessageRecived is auto call by JDA
 // JDA internally manages a WebSocket connection to discord server
-// 
+//  made changes to config email
 
 public class discordbot extends ListenerAdapter {
 

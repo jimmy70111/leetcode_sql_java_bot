@@ -3,6 +3,7 @@ package ashoyo1;
 
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -24,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.Set;
 
 
 
@@ -219,7 +221,17 @@ public class discordbot extends ListenerAdapter {
 
 
 // Setting up dailies and users will get a problem to solve 
-        
+
+if (content.toLowerCase().startsWith("!daily")) {
+    String problem = DatabaseManager.getRandomProblem();
+    Set<String> discordUserIds = DatabaseManager.getDiscordIDs();
+    String daily = "Here is the problem of the day! " + problem;
+
+ 
+}
+
+
+
 
 // getr all users 
      

@@ -41,7 +41,7 @@ public class DatabaseManager {
 
 
 
-    private String getRandomProblem() throws SQLException, IOException {
+    static String getRandomProblem() throws SQLException, IOException {
         String url = null;
         try (Connection connection = sqlconnect.getConnection();
              PreparedStatement statement = connection.prepareStatement(getRandProblem);
@@ -57,7 +57,7 @@ public class DatabaseManager {
 
 
 
-    private Set<String>  getDiscordIDs() throws SQLException, IOException {
+     static Set<String>  getDiscordIDs() throws SQLException, IOException {
 
         Set<String> userIds = new HashSet<>();
         try (Connection connection = sqlconnect.getConnection();

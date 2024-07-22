@@ -77,6 +77,7 @@ public class discordbot extends ListenerAdapter {
             response.append("!Users - View all users and their details.\n");
             response.append("!link -  link discord user with an leetcode user.\n");
             response.append("!daily -  sends daily to all the linked users\n");
+            response.append("!Deleteuser -  !deleteuser follow by the leetcode username to delete from database\n");
             response.append("!get - View the specific user details, call this command by !get username .\n");
             response.append("!leaderboard - View the leaderboard sorted by the highest number of problems solved.\n");
             // Add more command descriptions here as you implement them

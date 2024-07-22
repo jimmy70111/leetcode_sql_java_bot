@@ -284,17 +284,16 @@ public class discordbot extends ListenerAdapter {
 
 
 
-        if (content.toLowerCase().startsWith("!DeleteUser")) {
-
+        if (content.toLowerCase().startsWith("!deleteuser")) {
             String usernameToDelete = content.substring(11).trim();
-    
+        
             if (!usernameToDelete.isEmpty()) {
                 try {
                     Connection connection = sqlconnect.getConnection();
                     if (connection != null) {
                         String query = "DELETE FROM LeetCodeUsers WHERE username = ?";
                         PreparedStatement preparedStatement = connection.prepareStatement(query);
-                        
+        
                         preparedStatement.setString(1, usernameToDelete);
                         int rowsAffected = preparedStatement.executeUpdate();
         
@@ -306,14 +305,21 @@ public class discordbot extends ListenerAdapter {
         
                         preparedStatement.close();
                         connection.close();
+                    } else {
+                        event.getChannel().sendMessage("Failed to establish a database connection.").queue();
                     }
-                } catch (SQLException | IOException e) {
-                    event.getChannel().sendMessage("Database error: " + e.getMessage()).queue();
+                } catch (SQLException e) {
+                    event.getChannel().sendMessage("SQL error: " + e.getMessage()).queue();
+                    e.printStackTrace(); // For debugging purposes
+                } catch (IOException e) {
+                    event.getChannel().sendMessage("IO error: " + e.getMessage()).queue();
+                    e.printStackTrace(); // For debugging purposes
                 }
             } else {
                 event.getChannel().sendMessage("Usage: !deleteuser <username>").queue();
+            }
         }
-    }
+        
 
 
 

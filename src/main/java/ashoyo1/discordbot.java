@@ -284,6 +284,46 @@ public class discordbot extends ListenerAdapter {
 
 
 
+        if (content.equalsIgnoreCase("!DeleteUser")) {
+
+            String usernameToDelete = content.substring(11).trim();
+    
+            if (!usernameToDelete.isEmpty()) {
+                try {
+                    Connection connection = sqlconnect.getConnection();
+                    if (connection != null) {
+                        String query = "DELETE FROM LeetCodeUsers WHERE username = ?";
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        
+                        preparedStatement.setString(1, usernameToDelete);
+                        int rowsAffected = preparedStatement.executeUpdate();
+        
+                        if (rowsAffected > 0) {
+                            event.getChannel().sendMessage("User " + usernameToDelete + " has been deleted.").queue();
+                        } else {
+                            event.getChannel().sendMessage("User " + usernameToDelete + " not found.").queue();
+                        }
+        
+                        preparedStatement.close();
+                        connection.close();
+                    }
+                } catch (SQLException | IOException e) {
+                    event.getChannel().sendMessage("Database error: " + e.getMessage()).queue();
+                }
+            } else {
+                event.getChannel().sendMessage("Usage: !deleteuser <username>").queue();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
         if (content.equalsIgnoreCase("!Leaderboard")) {
             try {
                 Connection connection = sqlconnect.getConnection();
@@ -312,3 +352,4 @@ public class discordbot extends ListenerAdapter {
 
     }
 }
+

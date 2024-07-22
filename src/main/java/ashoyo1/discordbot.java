@@ -255,7 +255,7 @@ public class discordbot extends ListenerAdapter {
 
 // getr all users 
      
-        if (content.toLowerCase().startsWith("!Users")) {
+        if (content.equalsIgnoreCase("!Users")) {
             try {
                 Connection connection = sqlconnect.getConnection();
                 if (connection != null) {
@@ -284,7 +284,7 @@ public class discordbot extends ListenerAdapter {
 
 
 
-        if (content.equalsIgnoreCase("!DeleteUser")) {
+        if (content.toLowerCase().startsWith("!DeleteUser")) {
 
             String usernameToDelete = content.substring(11).trim();
     
@@ -294,7 +294,7 @@ public class discordbot extends ListenerAdapter {
                     if (connection != null) {
                         String query = "DELETE FROM LeetCodeUsers WHERE username = ?";
                         PreparedStatement preparedStatement = connection.prepareStatement(query);
-
+                        
                         preparedStatement.setString(1, usernameToDelete);
                         int rowsAffected = preparedStatement.executeUpdate();
         

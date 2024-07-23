@@ -11,6 +11,10 @@ import java.io.IOException;
 
 public class leetcodeproblems {
 
+// tested to see if I cound fetch problem from the leetcode http but doesnt work, decided to do it another way
+
+
+
     //private static final int  max = 100; 
 
     public static void main(String[] args) throws IOException {

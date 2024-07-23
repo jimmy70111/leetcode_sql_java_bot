@@ -12,6 +12,9 @@ import org.json.JSONObject;
 public class LeetcodeAPIfetch {
     private static final String API_URL = "https://leetcode-stats-api.herokuapp.com/";
 
+
+// testing class at first to see if the rest api works
+
     public static void main(String[] args) {
         String username = "ashoyo1"; // Replace with your LeetCode username
         try {

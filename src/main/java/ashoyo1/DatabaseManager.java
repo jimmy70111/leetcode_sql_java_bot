@@ -15,6 +15,10 @@ public class DatabaseManager {
     private static final String getDiscordUsers =  "SELECT discordUserId FROM LeetCodeUsers WHERE discordUserId IS NOT NULL";
 
 
+
+    /// updates discord id
+
+
     public static void updateDiscordId(String linkuser, String discorduserId) throws SQLException, IOException {
         Connection connection = sqlconnect.getConnection();
         if (connection != null) {
@@ -41,6 +45,9 @@ public class DatabaseManager {
 
 
 
+
+    // get a random problem from database
+
     static String getRandomProblem() throws SQLException, IOException {
         String url = null;
         try (Connection connection = sqlconnect.getConnection();
@@ -57,6 +64,8 @@ public class DatabaseManager {
 
 
 
+    // get all discord ids that is on the database
+    
      static Set<String>  getDiscordIDs() throws SQLException, IOException {
 
         Set<String> userIds = new HashSet<>();

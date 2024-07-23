@@ -25,6 +25,7 @@ public class sqlconnect {
         }
 
 
+// set up connects to the config database
 
     public static Connection getConnection() throws SQLException, IOException {
         Properties props = new Properties();

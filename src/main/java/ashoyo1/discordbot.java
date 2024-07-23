@@ -70,7 +70,11 @@ public class discordbot extends ListenerAdapter {
 
         // queue make it wait in line of thread 
 
-        // get user profile method
+
+
+
+
+        // get all commands
 
         if (content.equalsIgnoreCase("!commands")) {
             StringBuilder response = new StringBuilder("Available Commands:\n");
@@ -86,45 +90,14 @@ public class discordbot extends ListenerAdapter {
         }
 
 
+
+
+
+
+
+        // get user info 
+
         if (content.toLowerCase().startsWith("!get")) {
-            // String user = content.substring(5).trim(); 
-        
-            // try {
-            //     Connection connection = sqlconnect.getConnection();
-            //     if (connection != null) {
-
-            //         // use preparedStatement to set to index
-            //         String query = "SELECT * FROM LeetCodeUsers WHERE username = ?";
-            //         PreparedStatement preparedStatement = connection.prepareStatement(query);
-            //         preparedStatement.setString(1, user); 
-        
-            //         ResultSet resultSet = preparedStatement.executeQuery();
-        
-            //         StringBuilder response = new StringBuilder("LeetCode User:\n");
-            //         if (resultSet.next()) {
-            //             response.append("User ID: ").append(resultSet.getInt("user_id")).append("\n");
-            //             response.append("Username: ").append(resultSet.getString("username")).append("\n");
-            //             response.append("Email: ").append(resultSet.getString("email")).append("\n");
-            //             response.append("Problems Solved: ").append(resultSet.getInt("problems")).append("\n");
-            //             response.append("Easy: ").append(resultSet.getInt("Easy")).append("\n");
-            //             response.append("Medium: ").append(resultSet.getInt("Medium")).append("\n");
-            //             response.append("Hard: ").append(resultSet.getInt("Hard")).append("\n\n");
-            //         } else {
-            //             response = new StringBuilder("No user found with username: ").append(user);
-            //         }
-        
-            //         event.getChannel().sendMessage(response.toString()).queue();
-        
-            //         resultSet.close();
-            //         preparedStatement.close();
-            //         connection.close();
-            //     } else {
-            //         event.getChannel().sendMessage("Failed to establish database connection.").queue();
-            //     }
-            // } catch (SQLException | IOException e) {
-            //     event.getChannel().sendMessage("Database error: " + e.getMessage()).queue();
-            // }
-
 
           
             String user = content.substring(5).trim(); 
@@ -207,7 +180,6 @@ public class discordbot extends ListenerAdapter {
 // linked user
 
 
-
         if (content.toLowerCase().startsWith("!link")) {
             String linkuser = content.substring(5).trim(); 
             String  discorduserId = event.getAuthor().getId();  
@@ -222,7 +194,10 @@ public class discordbot extends ListenerAdapter {
         }
 
 
-// daily
+
+
+
+// daily and send to user 
 
         if (content.toLowerCase().startsWith("!daily")) {
             try {
@@ -251,6 +226,9 @@ public class discordbot extends ListenerAdapter {
                 e.printStackTrace();
             }
         }
+
+
+
 
 
 
@@ -284,6 +262,10 @@ public class discordbot extends ListenerAdapter {
         }
 
 
+
+
+
+// delete user from the database 
 
         if (content.toLowerCase().startsWith("!deleteuser")) {
             String usernameToDelete = content.substring(11).trim();
@@ -328,8 +310,7 @@ public class discordbot extends ListenerAdapter {
 
 
 
-
-
+        // get leaderboard of all on table users 
 
         if (content.equalsIgnoreCase("!Leaderboard")) {
             try {

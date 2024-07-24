@@ -1,23 +1,24 @@
-# Prerequisites
+## Prerequisites
 
-- Java Development Kit (JDK)
-- Maven for dependency management
-- MySQL Database
-- Discord Bot Token
-- Rest API
-- Discord Link - https://discord.com/oauth2/authorize?client_id=1247618641189539955&scope=bot&permissions=PERMISSIONS_INTEGER
-- Linked discord user with Leetcode Id
+- **Discord Invite Link**
+  - [Invite Bot](https://discord.com/oauth2/authorize?client_id=1247618641189539955&scope=bot&permissions=PERMISSIONS_INTEGER)
+  - Allows the bot to be invited to your Discord server. Replace `PERMISSIONS_INTEGER` with the appropriate permissions integer for your bot’s functionality.
+
+- **Java Development Kit (JDK)**
+  - Required for compiling and running Java code.
+
+- **Maven**
+  - Used for managing project dependencies and build processes.
+
+- **MySQL Database**
+  - Stores Leetcode user profiles and Leetcode problems.
+
+- **Discord Bot Token**
+  - Authentication token required for connecting and interacting with the Discord API.
+
+- **REST API**
+  - Provides external data to Leetcode for fetching real-time information.
 
 
-
-
-- add deleteUser
-- add dailies with how much time left(set a specific discord user for a lc users)
-
-
-
-
-
-
-
-
+- **Linked Discord User with Leetcode ID**
+  - Ensures that Discord users are linked to their Leetcode IDs for verification and to send daily updates.

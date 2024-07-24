@@ -2,7 +2,7 @@
 
 - **Discord Invite Link**
   - [Invite Bot](https://discord.com/oauth2/authorize?client_id=1247618641189539955&scope=bot&permissions=PERMISSIONS_INTEGER)
-  - Allows the bot to be invited to your Discord server. Replace `PERMISSIONS_INTEGER` with the appropriate permissions integer for your bot’s functionality.
+  - Allows the bot to be invited to your Discord server. 
 
 - **Java Development Kit (JDK)**
   - Required for compiling and running Java code.

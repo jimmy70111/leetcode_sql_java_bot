@@ -24,3 +24,5 @@
 
 - **Heroku**
   - Hosted the bot 24/7 on Heroku, optimizing server usage and costs by turning off the bot when not in use..
+  - **JAR File for Deployment**
+  - Download the JAR file to deploy on Heroku: [Download JAR File](https://your-download-link.com)

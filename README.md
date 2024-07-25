@@ -23,6 +23,7 @@
   - Ensures that Discord users are linked to their Leetcode IDs for verification and to send daily updates.
 
 - **Heroku**
-  - Hosted the bot 24/7 on Heroku, optimizing server usage and costs by turning off the bot when not in use..
-  - **JAR File for Deployment**
-  - Download the JAR file to deploy on Heroku: [Download JAR File](https://your-download-link.com)
+  - Hosted the bot 24/7 on Heroku, optimizing server usage and costs by turning off the bot when not in use.
+
+- **JAR File for Deployment**
+  - used  for development and deployment on Heroku.

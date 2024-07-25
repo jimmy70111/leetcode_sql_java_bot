@@ -22,5 +22,5 @@
 - **Linked Discord User with Leetcode ID**
   - Ensures that Discord users are linked to their Leetcode IDs for verification and to send daily updates.
 
- **Heroku**
+- **Heroku**
   - Hosted the bot 24/7 on Heroku, optimizing server usage and costs by turning off the bot when not in use..

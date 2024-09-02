@@ -50,7 +50,6 @@ public class discordbot extends ListenerAdapter {
             String token = properties.getProperty("bot.token");
 
 
-
             JDABuilder.createDefault(token)
             // enable bot to see mesgge 
             .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.MESSAGE_CONTENT) 
@@ -84,6 +83,8 @@ public class discordbot extends ListenerAdapter {
             response.append("!Deleteuser -  !deleteuser follow by the leetcode username to delete from database\n");
             response.append("!get - View the specific user details, call this command by !get username .\n");
             response.append("!leaderboard - View the leaderboard sorted by the highest number of problems solved.\n");
+            response.append("!ai - Ask the AI a question related to the Olympics.\n"); // Adding new command
+
             // Add more command descriptions here as you implement them
         
             event.getChannel().sendMessage(response.toString()).queue();
@@ -92,6 +93,16 @@ public class discordbot extends ListenerAdapter {
 
 
 
+            // AI command for Olympics-related questions
+         if (content.toLowerCase().startsWith("!ai")) {
+        String question = content.substring(4).trim();
+        if (question.isEmpty()) {
+            event.getChannel().sendMessage("Please ask a question about the Olympics after the !ai command.").queue();
+        } else {
+            String response = getAIResponse(question);
+            event.getChannel().sendMessage(response).queue();
+        }
+    }
 
 
 

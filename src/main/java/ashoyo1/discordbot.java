@@ -60,6 +60,9 @@ public class discordbot extends ListenerAdapter {
         }
     }
 
+
+    
+
     @Override
     public void onMessageReceived(@SuppressWarnings("null") MessageReceivedEvent event) {
 
@@ -99,11 +102,12 @@ public class discordbot extends ListenerAdapter {
         if (question.isEmpty()) {
             event.getChannel().sendMessage("Please ask a question about the Olympics after the !ai command.").queue();
         } else {
-            String response = getAIResponse(question);
+            String response =  AIClient.getAIResponse(question);
             event.getChannel().sendMessage(response).queue();
         }
     }
 
+    
 
 
         // get user info 
